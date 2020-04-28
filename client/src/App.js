@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
+import cookie from 'react-cookies';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+
 
 function App() {
+
+  // hooks to access and set access token
+  const [accessToken, setAccessToken] = useState(cookie.load('token'));
+
   return (
-    <h1>PERN STACK BOILER PLATE</h1>
+    accessToken ? <Dashboard/> : <Login/>
   );
 }
 

@@ -1,0 +1,20 @@
+CREATE DATABASE planner;
+
+CREATE TABLE users (
+    usr VARCHAR(15) PRIMARY KEY,
+    pwd VARCHAR(64) NOT NULL 
+);
+
+CREATE TABLE projects (
+    pid SERIAL PRIMARY KEY,
+    deadline DATE
+);
+
+CREATE TABLE todos(
+    tid SERIAL PRIMARY KEY,
+    usr VARCHAR(15) REFERENCES users(usr) ON DELETE CASCADE,
+    pid INTEGER REFERENCES projects(pid) ON DELETE CASCADE,
+    text VARCHAR(255),
+    assigned_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    completed BOOLEAN DEFAULT FALSE
+);

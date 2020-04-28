@@ -10,7 +10,7 @@ class PostgreSQL {
     // test connection
     async test(){
         try{
-            const res = await this.pool.query('SELECT * FROM pg_tables;');
+            const res = await this.pool.query(`SELECT 'Hello World!';`);
             return res.rows; 
         } catch(err){
             console.log(err);
@@ -18,7 +18,34 @@ class PostgreSQL {
         }
     }
 
-    // define CRUD operations here
+    // create new user
+    async addNewUser(usr, pwd){
+        try{
+            const res = await this.pool.query(`
+                INSERT INTO users
+                VALUES ('${usr}', '${pwd}')
+                RETURNING *;
+            `);
+            return res.rows[0]; // return user data just added 
+        } catch(err){
+            console.log(err);
+            return err;
+        }
+    }
+
+    // get user by username
+    async getUser(usr){
+        try{
+            const res = await this.pool.query(`
+                SELECT * FROM users WHERE usr = '${usr}';
+            `);
+            return res.rows[0]; // return the user 
+        } catch(err){
+            console.log(err);
+            return err;
+        }
+    }
+
 }
 
 module.exports = PostgreSQL;
