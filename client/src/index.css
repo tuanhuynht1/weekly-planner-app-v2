@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.login-form input{
+  display: block;
+}
+
 .nav-bar {
   background-color: black;
 }

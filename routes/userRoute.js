@@ -11,26 +11,29 @@ const jwt = require('jsonwebtoken');            // for access token
 const router = require('express').Router();     // for modulating routes
 
 // request access token
-router.get('/login', async (req,res) => {
+router.post('/login', async (req,res) => {
     const {usr, pwd} = req.body;
+    
     const user = await pg.getUser(usr);
-
+    console.log(user);
     // can't find user
-    if (user.length === 0) {
-        res.status(400).send('username does not exist');
+    if (!user) {
+        res.status(400).send();
     }
+    else{
+        // validate hash password
+        const valid = await bcrypt.compare(pwd, user.pwd);
 
-    // validate hash password
-    const valid = await bcrypt.compare(pwd, user.pwd);
-
-    if (valid) {
-        // sign and send access token
-        const token = jwt.sign({usr: user.usr}, process.env.TOKEN_SK);
-        res.header('auth-token', token).send(token);
+        if (valid) {
+            // sign and send access token
+            const token = jwt.sign({usr: user.usr}, process.env.TOKEN_SK);
+            res.header('auth-token', token).send(token);
+        }
+        else {
+            res.status(400).send();
+        }
     }
-    else {
-        res.status(400).send('incorrect password');
-    }
+    
 })
 
 // add new user
@@ -45,7 +48,7 @@ router.post('/register', async (req,res) => {
     const results = await pg.addNewUser(usr,hash);
 
     if(results.name === 'error'){
-        res.status(400).send(results.detail);
+        res.status(400).send();
     }
     else {
         res.send(results);

@@ -3,11 +3,11 @@ import Navbar from './NavBar';
 import Todos from './Todos';
 import Footer from './Footer';
 
-const Dashboard = () => {
+const Dashboard = ({logout}) => {
     return(
         <Fragment>
             <h1>Dashboard</h1>
-            <Navbar/>
+            <Navbar logout={logout}/>
             <Todos/>
             <Footer/>
         </Fragment>

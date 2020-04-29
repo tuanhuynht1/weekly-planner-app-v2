@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NavBar = () => {
+const NavBar = ({logout}) => {
     return(
         <div className='nav-bar'>
-            <button>Nav Item</button>
+            <button onClick={logout}>logout</button>
         </div>
     )
 }

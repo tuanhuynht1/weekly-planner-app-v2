@@ -39,6 +39,7 @@ class PostgreSQL {
             const res = await this.pool.query(`
                 SELECT * FROM users WHERE usr = '${usr}';
             `);
+            console.log('--------------------',res);
             return res.rows[0]; // return the user 
         } catch(err){
             console.log(err);
