@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useState, useContext} from 'react';
 import axios from 'axios';
 
 
@@ -7,6 +7,7 @@ const Login = ({login}) => {
     const [usr, setUsr] = useState('');
     const [pwd, setPwd] = useState('');
     const [mssg, setMssg] = useState('');
+
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -22,7 +23,7 @@ const Login = ({login}) => {
         })
         .then(res => {
             console.log(res.data);
-            login(res.data);
+            login(res.data,usr);    // set cookies and refresh page
         })
         .catch(e => {
             console.error(e);
@@ -33,7 +34,7 @@ const Login = ({login}) => {
 
     return(
         <Fragment>
-            <h1>Login Page</h1>
+            <h1>Login</h1>
             <form className='login-form' onSubmit={e => onSubmit(e)}>
                 <input type='text' onChange={e => setUsr(e.target.value)}/>
                 <input type='password' onChange={e => setPwd(e.target.value)}/>

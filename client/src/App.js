@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import cookie from 'react-cookies';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import {GlobalProvider} from './GlobalContext';
 
 
 function App() {
@@ -9,14 +10,14 @@ function App() {
   // hooks to access and set access token
   const [accessToken] = useState(cookie.load('token'));
   
-  const login = (token) => {
-    // store token in cookie
+  const login = (token, user) => {
+    // store token and user in cookie
     cookie.save('token',token);
     // refresh page
     window.location = '/';
   }
 
-  const logout = (token) => {
+  const logout = () => {
     // store token in cookie
     cookie.remove('token');
     // refresh page
@@ -25,7 +26,9 @@ function App() {
 
 
   return (
-    accessToken ? <Dashboard logout={logout}/> : <Login login={login}/>
+    <GlobalProvider>
+      {accessToken ? <Dashboard logout={logout}/> : <Login login={login}/>}
+    </GlobalProvider>
   );
 }
 
