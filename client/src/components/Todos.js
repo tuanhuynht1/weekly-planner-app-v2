@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {GlobalContext} from '../GlobalContext';
-import {dateTrim, dateToPostgresString} from '../services/Dates';
+import {dateTrim, dateToPostgresString, dateToString} from '../services/Dates';
+import TodoItem from './TodoItem';
 
 const Todos = () => {
 
@@ -8,12 +9,13 @@ const Todos = () => {
 
     return(
         <div className='todos-container'>
+            <h2>{dateToString(date)}</h2>
             <ul>
-                {
-                    todos
-                    .filter( t => dateTrim(t.assigned_date) === dateToPostgresString(date))
-                    .map((t,i) => <li key={i}>{t.text}</li>)
-                }
+            {
+                todos
+                .filter( t => dateTrim(t.assigned_date) === dateToPostgresString(date))
+                .map((t,i) => <TodoItem todo={t} key={i}/>)
+            }
             </ul>
         </div>
     )
