@@ -13,7 +13,6 @@ const router = require('express').Router();     // for modulating routes
 // request access token
 router.post('/login', async (req,res) => {
     const {usr, pwd} = req.body;
-    
     const user = await pg.getUser(usr);
     console.log(user);
     // can't find user
@@ -27,6 +26,7 @@ router.post('/login', async (req,res) => {
         if (valid) {
             // sign and send access token
             const token = jwt.sign({usr: user.usr}, process.env.TOKEN_SK);
+            console.log(token);
             res.header('auth-token', token).send(token);
         }
         else {
@@ -48,7 +48,7 @@ router.post('/register', async (req,res) => {
     const results = await pg.addNewUser(usr,hash);
 
     if(results.name === 'error'){
-        res.status(400).send();
+        res.status(400).send(results);
     }
     else {
         res.send(results);

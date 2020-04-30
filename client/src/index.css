@@ -12,14 +12,26 @@ code {
     monospace;
 }
 
+/* Login Page
+--------------------------------------------------------------------------------------------------*/
 .login-form input{
   display: block;
 }
 
+/* Navbar
+--------------------------------------------------------------------------------------------------*/
 .nav-bar {
   background-color: black;
 }
+.nav-bttn {
+  background-color: aliceblue;
+}
+.nav-bttn-selected {
+  background-color: red;
+}
 
+/* Footer
+--------------------------------------------------------------------------------------------------*/
 .footer {
   position: fixed;
   bottom: 0;

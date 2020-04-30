@@ -1,15 +1,14 @@
-import React, {Fragment, useState, useContext} from 'react';
+import React, {Fragment, useState} from 'react';
 import axios from 'axios';
+import cookie from 'react-cookies';
 
-
-const Login = ({login}) => {
+const Login = () => {
 
     const [usr, setUsr] = useState('');
     const [pwd, setPwd] = useState('');
     const [mssg, setMssg] = useState('');
 
-
-    const onSubmit = (e) => {
+    const login = (e) => {
         e.preventDefault();
         if(usr.trim() === '' || pwd.trim() === ''){
             setMssg('All fields must be filled');
@@ -17,13 +16,14 @@ const Login = ({login}) => {
         }
         // call login api to recieve access token
         axios
-        .post('/user/login',{
+        .post('api/auth/login',{
             usr: usr,
             pwd: pwd
         })
         .then(res => {
-            console.log(res.data);
-            login(res.data,usr);    // set cookies and refresh page
+            // gets authenticated token
+            cookie.save('token',res.data);
+            window.location = '/';
         })
         .catch(e => {
             console.error(e);
@@ -35,7 +35,7 @@ const Login = ({login}) => {
     return(
         <Fragment>
             <h1>Login</h1>
-            <form className='login-form' onSubmit={e => onSubmit(e)}>
+            <form className='login-form' onSubmit={e => login(e)}>
                 <input type='text' onChange={e => setUsr(e.target.value)}/>
                 <input type='password' onChange={e => setPwd(e.target.value)}/>
                 <button type='submit'>sign in</button>

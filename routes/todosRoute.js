@@ -2,21 +2,37 @@
 const PostgreSQL = require('../database');
 const pg = new PostgreSQL(process.env.DATABASE_URL);
 
-const router = require('express').Router();
+const jwt = require('jsonwebtoken');            // for access token
+const router = require('express').Router();     // for modulating routes
+ 
+// auth middleware
+const auth = async(req, res, next) => {
+    const token = req.header('Authorization');
+    try{
+        const data = jwt.verify(token, process.env.TOKEN_SK)
+        req.user = data.usr;
+        next();
+    }
+    catch (error){
+        res.status(400).send({error: 'Unauthorized'});
+    }
+}
 
-// GET all todos
-router.get('/', async (req,res) => {
-    res.send('ALL');
+// get all users todos
+router.get('/', auth, async (req,res) => {
+    res.send(await pg.getTodos(req.user));
 })
 
-// POST new todo
-router.post('/', async (req,res) => {
-    res.send('NEW');
+// post new todo
+router.post('/', auth, async (req,res) => {
+    const {pid,text,assigned_date} = req.body;
+    res.send(await pg.addNewTodo(req.user,pid,text,assigned_date));
 })
 
-// DELETE todo
-router.delete('/', async (req,res) => {
-    res.send('DEL');
+// delete todo
+router.delete('/:tid', auth, async (req,res) => {
+    const {tid} = req.params;
+    res.send(await pg.deleteTodo(tid));
 })
 
 module.exports = router;
