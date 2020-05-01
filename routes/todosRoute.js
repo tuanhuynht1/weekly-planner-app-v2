@@ -29,6 +29,12 @@ router.post('/', auth, async (req,res) => {
     res.send(await pg.addNewTodo(req.user,pid,text,assigned_date));
 })
 
+// toggle completed state
+router.put('/:tid', auth, async (req,res) => {
+    const { tid } = req.params;
+    res.send(await pg.toggleStatus(tid));
+})
+
 // delete todo
 router.delete('/:tid', auth, async (req,res) => {
     const {tid} = req.params;

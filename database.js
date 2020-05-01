@@ -74,6 +74,22 @@ class PostgreSQL {
         }
     }
 
+    // toggle todo status
+    async toggleStatus(tid){
+        try{
+            const res = await this.pool.query(`
+                UPDATE todos
+                SET completed = NOT completed
+                WHERE tid = ${tid}
+                RETURNING *; 
+            `);
+            return res.rows[0]; // return todos
+        } catch(err){
+            console.log(err);
+            return err;
+        }
+    }
+
     // delete todo
     async deleteTodo(tid){
         try{
