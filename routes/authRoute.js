@@ -17,7 +17,7 @@ router.post('/login', async (req,res) => {
     console.log(user);
     // can't find user
     if (!user) {
-        res.status(400).send();
+        res.status(400).send('Username does not exist');
     }
     else{
         // validate hash password
@@ -30,7 +30,7 @@ router.post('/login', async (req,res) => {
             res.header('auth-token', token).send(token);
         }
         else {
-            res.status(400).send();
+            res.status(400).send('Incorrect password!');
         }
     }
     

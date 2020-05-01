@@ -21,7 +21,7 @@ const Dashboard = () => {
             // console.log(res.data);
             setTodos(res.data);
         })
-        .catch( e => console.error(e));
+        .catch( e => console.error(e.response.data));
     }, [token,setTodos])
 
     return(

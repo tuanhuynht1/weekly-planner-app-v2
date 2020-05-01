@@ -25,10 +25,7 @@ const Login = () => {
             cookie.save('token',res.data);
             window.location = '/';
         })
-        .catch(e => {
-            console.error(e);
-            setMssg('Invalid username or password');
-        });
+        .catch( e => console.error(e.response));
     }
 
 

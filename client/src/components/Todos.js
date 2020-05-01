@@ -28,10 +28,22 @@ const Todos = () => {
                 }
             })
             .then(res => console.log(res.data))
-            .catch(e => console.error(e));
+            .catch(e => console.error(e.response.data));
         }    
     }
     
+    const onClickRemove = (tid) => {
+        setTodos(prev => prev.filter(t => t.tid !== tid) );
+        axios
+        .delete(`api/todos/${tid}`,{
+            headers: {
+                Authorization: token
+            }
+        })
+        .then(res => console.log(res.data))
+        .catch(e => console.error(e.response.data));
+    }
+
     return(
         <div className='todos-container'>
             <h2>{dateToString(date)}</h2>
@@ -39,7 +51,7 @@ const Todos = () => {
             {
                 todos
                 .filter( t => dateTrim(t.assigned_date) === dateToPostgresString(date))
-                .map((t,i) => <TodoItem todo={t} key={i} index={i} />)
+                .map((t,i) => <TodoItem todo={t} key={i} index={i} remove={onClickRemove}/>)
             }
                 <div className='todo-item'>
                     <form onSubmit={ e => {e.preventDefault(); onClickAdd()}}>
