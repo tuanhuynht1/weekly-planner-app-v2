@@ -99,6 +99,10 @@ h1 {
   border: 0;
   width: 90%;
 }
+.todo-item .crossed-out {
+  color: rgb(165, 165, 165);
+  text-decoration: line-through;
+}
 .add {
   color: rgb(7, 206, 7);
   line-height: 50px;
@@ -107,6 +111,27 @@ h1 {
 }
 .add:hover{
   filter: brightness(120%);
+}
+.todo-text{
+  display: inline-block;
+  width: 90%;
+}
+.uncomplete {
+  line-height: 50px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+.uncomplete:hover {
+  color: lightblue;
+}
+.complete {
+  line-height: 50px;
+  margin-left: 15px;
+  cursor: pointer;
+  color: teal;
+}
+.complete:hover {
+  color: lightblue;
 }
 
 /* Footer

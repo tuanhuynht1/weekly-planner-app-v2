@@ -29,10 +29,9 @@ const Todos = () => {
             })
             .then(res => console.log(res.data))
             .catch(e => console.error(e));
-        }
-        
+        }    
     }
-
+    
     return(
         <div className='todos-container'>
             <h2>{dateToString(date)}</h2>
@@ -40,12 +39,12 @@ const Todos = () => {
             {
                 todos
                 .filter( t => dateTrim(t.assigned_date) === dateToPostgresString(date))
-                .map((t,i) => <TodoItem todo={t} key={i}/>)
+                .map((t,i) => <TodoItem todo={t} key={i} index={i} />)
             }
                 <div className='todo-item'>
                     <form onSubmit={ e => {e.preventDefault(); onClickAdd()}}>
                         <input id='add-input' type='text' placeholder='Add new todo...' 
-                        onChange={e => setInput(e.target.value)}/>
+                        onChange={e => setInput(e.target.value)} autoComplete='off'/>
                         <i className='add fas fa-plus-square fa-2x' onClick={onClickAdd}></i>
                     </form>
                 </div>
