@@ -20,7 +20,7 @@ const NavBar = () => {
             <NavBttn name='THU' day={4}/>
             <NavBttn name='FRI' day={5}/>
             <NavBttn name='SAT' day={6}/>
-            <button onClick={logout}>logout</button>
+            <button className='nav-bttn logout' onClick={logout}>Sign Out</button>
         </div>
     )
 }

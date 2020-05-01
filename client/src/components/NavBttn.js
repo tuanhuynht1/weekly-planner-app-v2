@@ -15,7 +15,7 @@ const NavBttn = ({name, day}) => {
     
     if (date.getDay() === day){
         return(
-            <button className='nav-bttn-selected'>{name}</button>
+            <button className='selected'>{name}</button>
         )
     }
     else{

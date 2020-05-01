@@ -6,7 +6,7 @@ import {GlobalContext} from './GlobalContext';
 
 function App() {
 
-  const token = useContext(GlobalContext);
+  const {token} = useContext(GlobalContext);
   return (
       token ? <Dashboard/> : <Login/>
   );

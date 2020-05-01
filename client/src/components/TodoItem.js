@@ -2,9 +2,11 @@ import React from 'react';
 
 const TodoItem = ({todo}) => {
     return(
-        <li>
-            {todo.text}
-        </li>
+        <div className='todo-item'>
+            <li>
+                {todo.text}
+            </li>
+        </div>
     )
 }
 
