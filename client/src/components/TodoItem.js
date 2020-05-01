@@ -1,23 +1,32 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import axios from 'axios';
 import {GlobalContext} from '../GlobalContext';
 
 const TodoItem = ({todo, remove}) => {
 
     const [complete, toggle] = useState(todo.completed);
-    const {token} = useContext(GlobalContext);
+    const {token, setCount, date} = useContext(GlobalContext);
 
     const onCheck = () => {
         toggle(prev => !prev);
+        if (complete){
+            setCount(prev => prev-1);
+        }
+        else{
+            setCount(prev => prev+1);
+        }
         axios
         .put(`api/todos/${todo.tid}`,{},{
             headers: {
                 Authorization: token
             }
         })
-        .then(res => console.log(res.data)) 
         .catch(e => console.error(e.response.data));
     }
+
+    useEffect(() => {
+        toggle(todo.completed);
+    }, [date]);
 
     return(
         <div className='todo-item'>
