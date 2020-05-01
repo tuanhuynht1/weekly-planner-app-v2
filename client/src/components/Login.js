@@ -28,42 +28,36 @@ const Login = () => {
         .catch( e => setMssg('Invalid Credentials'));
     }
 
-    const signup = (e) => {
-        e.preventDefault();
+    const signup = () => {
         if(usr.trim() === '' || pwd.trim() === ''){
             setMssg('All fields must be filled');
             return;
         }
-        // call login api to recieve access token
         axios
         .post('api/auth/register',{
             usr: usr,
             pwd: pwd
         })
         .then(res => {
-            // gets authenticated token
-            window.location = '/';
+            setMssg('Sign up success! You can now sign in!');
+            document.getElementById('usr').value = '';
+            document.getElementById('pwd').value = '';
         })
-        .catch( e => setMssg('Invalid Credentials'));
+        .catch( (e) => setMssg('Username already taken'));
     }
 
 
     return(
-        <Fragment>
+        <div className='login-page'>
             <h1>Login</h1>
             <form className='login-form' onSubmit={e => login(e)}>
-                <input type='text' onChange={e => setUsr(e.target.value)}/>
-                <input type='password' onChange={e => setPwd(e.target.value)}/>
+                <input id='usr' type='text' autoComplete='off' placeholder='username' onChange={e => setUsr(e.target.value)}/>
+                <input id='pwd' type='password' autoComplete='off' placeholder='password' onChange={e => setPwd(e.target.value)}/>
                 <button type='submit'>sign in</button>
             </form>
+            <button onClick={signup}>sign up</button>
             <p>{mssg}</p>
-            <h1>Signup</h1>
-            <form className='login-form' onSubmit={e => signup(e)}>
-                <input type='text' onChange={e => setUsr(e.target.value)}/>
-                <input type='password' onChange={e => setPwd(e.target.value)}/>
-                <button type='submit'>sign up</button>
-            </form>
-        </Fragment>
+        </div>
     )
 }
 
